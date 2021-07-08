@@ -6,11 +6,11 @@
 #define		LOCAL_ACCESS 0x01
 #define		REMOTE_ACCESS 0x02
 
-#define		WIFI_SSID "ssid"
-#define		WIFI_PASSWORD "password"
+#define		WIFI_SSID "Mesh"
+#define		WIFI_PASSWORD "01227379368"
 
-#define		WIFI_AP_SSID "MyAP"
-#define		WIFI_AP_PASSWORD "none"
+#define		WIFI_AP_SSID "Mesh"
+#define		WIFI_AP_PASSWORD "01227379368"
 
 #define		MAX_CLIENTS 8
 #define		MAX_DHCP 8
@@ -26,7 +26,7 @@
 // Any value > 16 disables this feature
 // (I don't know of any that don't --AJK)
 //
-#define		STATUS_LED_GPIO 2
+#define		STATUS_LED_GPIO 0xff
 
 //
 // Defines the default GPIO pin for HW factory reset (when this GPIO is pulled low for more than 3 secs)
@@ -48,7 +48,7 @@
 // Define this to 1 to support the "sleep" command for power management and deep sleep
 // Requires a connection of GPIO16 and RST (probably not available on ESP01 modules)
 //
-#define		ALLOW_SLEEP 1
+#define		ALLOW_SLEEP 0
 
 //
 // Define this to 1 to support a daily traffic limit
@@ -91,7 +91,7 @@
 //
 // Define this to 1 if you want to have QoS for the SoftAP.
 //
-#define		TOKENBUCKET 1
+#define		TOKENBUCKET 0
 // Burst size (token bucket size) in seconds of average bitrate
 #define		MAX_TOKEN_RATIO 4
 
@@ -122,8 +122,10 @@
 #define		PROTOCOL_NAMEv31 /*MQTT version 3.1 compatible with Mosquitto v0.15*/
 //#define           PROTOCOL_NAMEv311 /*MQTT version 3.11 compatible with https://eclipse.org/paho/clients/testing/*/
 
-#define		MQTT_PREFIX "/WiFi"
-#define		MQTT_ID "ESPRouter"
+#define     MQTT_HOST "192.168.1.1"
+
+#define		MQTT_PREFIX "Prod"
+#define		MQTT_ID "MeshNode"
 #define		MQTT_REPORT_INTERVAL 15 /*seconds*/
 
 // Define this if you want to get messages about GPIO pin status changes
@@ -134,7 +136,7 @@
 
 // Define this to 1 support WPA2 PEAP authentication (experimental)
 //
-#define		WPA2_PEAP 1
+#define		WPA2_PEAP 0
 
 //
 // Define this to 1 to support an ENC28J60 Ethernet interface
@@ -146,7 +148,7 @@
 // Define this to 1 to support ENC28J60 DHCP server
 // Experimental feature - might not yet be stable
 //
-#define         DCHPSERVER_ENC28J60 1
+#define         DCHPSERVER_ENC28J60 0
 
 //
 // Define this ESP GPIO, if you have the HW-RESET pin of the ENC28J60 connected to it
@@ -157,7 +159,7 @@
 //
 // Define this to 1 if you want to be able to control GPIO pins from the command line
 //
-#define		GPIO_CMDS 1
+#define		GPIO_CMDS 0
 
 // Internal
 

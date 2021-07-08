@@ -19,6 +19,8 @@ BUILD_AREA = $(CURDIR)/..
 BUILD_BASE	= build
 FW_BASE		= firmware
 
+FILTEROUTPUT ?= $(CURDIR)/esp-open-rtos/utils/filteroutput.py
+
 # base directory for the compiler
 XTENSA_TOOLS_ROOT ?= $(CURDIR)/esp-open-sdk/xtensa-lx106-elf/bin
 PATH := $(XTENSA_TOOLS_ROOT):$(PATH)
@@ -28,9 +30,13 @@ SDK_BASE	?= $(CURDIR)/esp-open-sdk/sdk
 
 # # esptool.py path and port
 ESPTOOL		?= $(XTENSA_TOOLS_ROOT)/esptool.py
-ESPPORT		?= /dev/ttyUSB0
-ESPTOOLBAUD	?= 115200
-ESPTOOLOPTS	= -ff 40m -fm dio -fs 32m
+
+#ESPPORT ?= /dev/tty.SLAB_USBtoUART
+ESPPORT ?= /dev/tty.wchusbserial1420
+#ESPPORT ?= /dev/tty.wchusbserial14110
+#ESPTOOLBAUD	?= 115200
+ESPTOOLBAUD ?= 921600
+ESPTOOLOPTS	= -ff 26m -fm dout -fs 32m
 
 # name for the target project
 TARGET		= app
@@ -46,7 +52,8 @@ EXTRA_INCDIR    = include
 LIBS		= c gcc hal pp phy net80211 lwip_open_napt wpa wpa2 main
 
 # compiler flags using during compilation of source files
-CFLAGS		= -Os -g -O2 -Wpointer-arith -Wundef -Werror -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH -DLWIP_OPEN_SRC -DUSE_OPTIMIZE_PRINTF
+#CFLAGS		= -Os -g -O2 -Wpointer-arith -Wundef -Werror -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH -DLWIP_OPEN_SRC -DUSE_OPTIMIZE_PRINTF
+CFLAGS		= -Os -g -O2 -Wpointer-arith -Wundef  -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH -DLWIP_OPEN_SRC -DUSE_OPTIMIZE_PRINTF
 
 # linker flags used to generate the main object file
 LDFLAGS		= -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static -L.
@@ -164,6 +171,17 @@ flash1: $(FW_BASE)/sha1sums
 
 flashboth: $(FW_BASE)/sha1sums
 	$(ESPTOOL) --port $(ESPPORT) --baud $(ESPTOOLBAUD) write_flash $(ESPTOOLOPTS) 0x00000 $(RBOOT_FILE) $(FW_FILE_1_ADDR) $(FW_FILE_1) $(FW_FILE_2_ADDR) $(FW_FILE_2)
+
+
+test: flash
+	$(FILTEROUTPUT) --port $(ESPPORT) --baud 115200
+
+erase:
+	esptool.py --port $(ESPPORT)  erase_flash
+server:
+	-cd firmware && python -m  SimpleHTTPServer 8000
+monitor:
+	$(FILTEROUTPUT) --port $(ESPPORT) --baud 115200
 
 clean:
 	$(Q) rm -rf $(FW_BASE) $(BUILD_BASE)

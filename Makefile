@@ -20,11 +20,11 @@ BUILD_BASE	= build
 FW_BASE		= firmware
 
 # base directory for the compiler
-XTENSA_TOOLS_ROOT ?= $(BUILD_AREA)/esp-open-sdk/xtensa-lx106-elf/bin
+XTENSA_TOOLS_ROOT ?= $(CURDIR)/esp-open-sdk/xtensa-lx106-elf/bin
 PATH := $(XTENSA_TOOLS_ROOT):$(PATH)
 
 # # base directory of the ESP8266 SDK package, absolute
-SDK_BASE	?= $(BUILD_AREA)/esp-open-sdk/sdk
+SDK_BASE	?= $(CURDIR)/esp-open-sdk/sdk
 
 # # esptool.py path and port
 ESPTOOL		?= $(XTENSA_TOOLS_ROOT)/esptool.py

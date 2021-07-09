@@ -78,7 +78,7 @@ uint32_t reg0, reg1, reg3;
     config->ap_watchdog			= -1;
     config->client_watchdog		= -1;
 
-    config->automesh_mode		= 0;
+    config->automesh_mode		= 1;
     config->automesh_checked		= 0;
     config->automesh_tries		= 0;
     config->automesh_threshold		= 85;
@@ -123,7 +123,7 @@ uint32_t reg0, reg1, reg3;
 #endif
 
 #if MQTT_CLIENT
-    os_sprintf(config->mqtt_host,"%s", "none");
+    os_sprintf(config->mqtt_host,"%s", MQTT_HOST);
     config->mqtt_port			= 1883;
     os_sprintf(config->mqtt_user,"%s", "none");
     config->mqtt_password[0]		= 0;
@@ -162,8 +162,8 @@ uint32_t reg0, reg1, reg3;
     acl_init();	// initializes the ACLs, written in config during save
 #endif
 #if OTAUPDATE
-    os_sprintf(config->ota_host,"%s", "none");
-    config->ota_port			= 80;
+    os_sprintf(config->ota_host,"%s", OTA_HOST);
+    config->ota_port			= OTA_PORT;
 #endif
 #if GPIO_CMDS
     int i;

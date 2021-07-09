@@ -55,6 +55,8 @@
 #include "mqtt.h"
 #endif
 
+#include "os.h"
+
 #define os_sprintf_flash(str, fmt, ...)                                    \
     do                                                                     \
     {                                                                      \
@@ -168,6 +170,23 @@ void ICACHE_FLASH_ATTR mqtt_publish_str(uint16_t mask, uint8_t *sub_topic, uint8
     //os_printf("Publish: %s %s\r\n", buf, str);
     MQTT_Publish(&mqttClient, buf, str, os_strlen(str), config.mqtt_qos, 0);
 }
+void ICACHE_FLASH_ATTR mqtt_pub_str(uint8_t *topic, uint8_t *str)
+{
+     if (!mqtt_enabled )
+        return;
+    uint8_t buf[256];
+    os_sprintf(buf, "%s", topic);
+    MQTT_Publish(&mqttClient, buf, str, os_strlen(str), config.mqtt_qos, 0);
+}
+
+void ICACHE_FLASH_ATTR mqtt_pub_str_retain(uint8_t *topic, uint8_t *str)
+{
+     if (!mqtt_enabled )
+        return;
+    uint8_t buf[256];
+    os_sprintf(buf, "%s", topic);
+    MQTT_Publish(&mqttClient, buf, str, os_strlen(str), config.mqtt_qos, 1);
+}
 
 void ICACHE_FLASH_ATTR mqtt_publish_int(uint16_t mask, uint8_t *sub_topic, uint8_t *format, uint32_t val)
 {
@@ -203,6 +222,8 @@ static void ICACHE_FLASH_ATTR mqttConnectedCb(uint32_t *args)
         MQTT_Subscribe(client, config.mqtt_gpio_out_topic, config.mqtt_qos);
     }
 #endif
+    (void) OS_mqttConnected_ISR(client);
+
 }
 
 static void ICACHE_FLASH_ATTR mqttDisconnectedCb(uint32_t *args)
@@ -243,6 +264,7 @@ static void ICACHE_FLASH_ATTR mqttDataCb(uint32_t *args, const char *topic, uint
         return;
     }
 #endif
+    (void) OS_mqttData_ISR(topic,topic_len,data,data_len);
 }
 #endif /* MQTT_CLIENT */
 
@@ -4275,9 +4297,12 @@ void ICACHE_FLASH_ATTR user_init()
     UART_init_console(BIT_RATE_115200, 0, console_rx_buffer, console_tx_buffer);
 
     os_printf("\r\n\r\nWiFi Repeater %s starting\r\n\nrunning rom %d\r", ESP_REPEATER_VERSION, rboot_get_current_rom());
-
+    
     // Load config
     uint8_t config_state = config_load(&config);
+
+    (void) OS_Init();
+    
     new_portmap = config.max_portmap;
     ip_napt_init(config.max_nat, config.max_portmap);
     if (config_state == 0)
@@ -4295,10 +4320,11 @@ void ICACHE_FLASH_ATTR user_init()
         ip_napt_set_tcp_timeout(config.tcp_timeout);
     if (config.udp_timeout != 0)
         ip_napt_set_udp_timeout(config.udp_timeout);
-
+        
+    int i;
 #if ACLS
     acl_debug = 0;
-    int i;
+
     for (i = 0; i < MAX_NO_ACLS; i++)
     {
         acl_clear_stats(i);
@@ -4567,6 +4593,7 @@ void ICACHE_FLASH_ATTR user_init()
     os_timer_setfn(&ptimer, timer_func, 0);
     os_timer_arm(&ptimer, 500, 0);
 
+    (void) OS_IniEnd();
     //Start task
     system_os_task(user_procTask, user_procTaskPrio, user_procTaskQueue, user_procTaskQueueLen);
 }

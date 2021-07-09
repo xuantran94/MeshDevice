@@ -88,6 +88,8 @@
 //
 #define		OTAUPDATE 1
 
+#define OTA_HOST        "192.168.1.100"
+#define OTA_PORT         8000
 //
 // Define this to 1 if you want to have QoS for the SoftAP.
 //
@@ -116,7 +118,7 @@
 //
 #define		MQTT_CLIENT 1
 
-#define		MQTT_BUF_SIZE 2048
+#define		MQTT_BUF_SIZE 4096
 #define		MQTT_KEEPALIVE 120  /*seconds*/
 #define		MQTT_RECONNECT_TIMEOUT 5 /*seconds*/
 #define		PROTOCOL_NAMEv31 /*MQTT version 3.1 compatible with Mosquitto v0.15*/

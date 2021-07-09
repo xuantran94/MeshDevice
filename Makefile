@@ -42,7 +42,9 @@ ESPTOOLOPTS	= -ff 26m -fm dout -fs 32m
 TARGET		= app
 
 # which modules (subdirectories) of the project to include in compiling
-MODULES		= driver user mqtt easygpio
+MODULES		= driver user mqtt easygpio  
+MODULES	   += Integration Integration/OS Integration/Device Integration/Light
+MODULES	   += Integration/Hass Integration/Conf
 #EXTRA_INCDIR    = include $(BUILD_AREA)/esp-open-sdk/esp-open-lwip/include
 EXTRA_INCDIR    = include
 

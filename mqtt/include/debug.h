@@ -8,10 +8,12 @@
 #ifndef USER_DEBUG_H_
 #define USER_DEBUG_H_
 
+//#define MQTT_DEBUG_ON
+
 #if defined(MQTT_DEBUG_ON)
 #define MQTT_INFO( format, ... ) os_printf( format, ## __VA_ARGS__ )
 #else
-#define MQTT_INFO( format, ... )
+#define MQTT_INFO( format, ... ) 
 #endif
 
 

@@ -44,7 +44,7 @@ Light:
     MqttSupported: 
       - Value: true
     DebugEnable: 
-      - Value: false
+      - Value: true
     InfoEnable: 
       - Value: true
 
@@ -75,7 +75,7 @@ HwAbDio:
       ConnectedTo:
       - Value:  2  
       InitState: 
-      - Value:  STD_OFF 
+      - Value:  STD_ON 
   General:
     DebugEnable: 
       - Value: false

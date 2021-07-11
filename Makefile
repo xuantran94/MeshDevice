@@ -45,7 +45,7 @@ TARGET		= app
 MODULES		= driver user mqtt easygpio  
 MODULES	   += Integration Integration/OS Integration/Device Integration/Light
 MODULES	   += Integration/Hass Integration/Conf Integration/MqttIf 
-MODULES	   += Integration/HwAbDio Integration/HwAbPwm
+MODULES	   += Integration/HwAbDio Integration/HwAbPwm Integration/Swadp
 #EXTRA_INCDIR    = include $(BUILD_AREA)/esp-open-sdk/esp-open-lwip/include
 EXTRA_INCDIR    = include
 

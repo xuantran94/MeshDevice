@@ -1,0 +1,15 @@
+#ifndef _HWABPWM_CFG_H_
+#define _HWABPWM_CFG_H_
+
+#include "HwAbPwm_Types.h"
+//<INCLUDE DRIVER>
+
+<CONFIGURATION SETTING>
+
+#if (HWABPWM_CFG_MODULE_ACTIVE == STD_ON) 
+
+<SIGNALS ID>
+extern const hwAbPwmConfig_tst hwAbPwmConfig_ast[HWABPWM_CFG_NUM];
+#endif
+
+#endif

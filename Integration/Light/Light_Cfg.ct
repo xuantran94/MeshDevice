@@ -1,0 +1,7 @@
+#include "Light_Cfg.h"
+#if (LIGHT_CFG_MODULE_ACTIVE == STD_ON) 
+const LightConfig_tst lightConfig_ast[LIGHT_CFG_NUM_LIGHTS] =
+{
+<SIGNALS CONFIGURATION>
+};
+#endif

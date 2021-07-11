@@ -1,0 +1,86 @@
+Light:
+  ConfigSet:
+    - Signal: 
+      Name: DenNhaBep
+      FriendlyName: 
+      - Value: DenNhaBep
+      ConnectedTo:
+      - Value:  12
+      Brighness:
+      - Value: false
+    # - Signal: 
+    #   Name: DenNhaAn
+    #   FriendlyName: 
+    #   - Value:  DenNhaAn
+    #   ConnectedTo:
+    #   - Value:  13
+    #   Brighness:
+    #   - Value: false
+    # - Signal: 
+    #   Name: DenSauHe
+    #   FriendlyName: 
+    #   - Value:  DenSauHe
+    #   ConnectedTo:
+    #   - Value:  14
+    #   Brighness:
+    #   - Value: false
+    # - Signal: 
+    #   Name: DenNhaBep12V
+    #   FriendlyName: 
+    #   - Value: DenNhaBep12V
+    #   ConnectedTo:
+    #   - Value:  2
+    #   Brighness:
+    #   - Value: true
+    - Signal: 
+      Name: DenNhaAn12V
+      FriendlyName: 
+      - Value:  DenNhaAn12V
+      ConnectedTo:
+      - Value:  4
+      Brighness:
+      - Value: true
+  General:
+    MqttSupported: 
+      - Value: true
+    DebugEnable: 
+      - Value: false
+    InfoEnable: 
+      - Value: true
+
+HwAbPwm:
+  ConfigSet:
+    - Signal: 
+      Name: Light_DenNhaBep12V
+      ConnectedTo:
+      - Value:  2
+      InitDuty:
+      - Value:  70
+    # - Signal: 
+    #   Name: Light_DenNhaAn12V
+    #   ConnectedTo:
+    #   - Value:  4
+    #   InitDuty:
+    #   - Value:  0     
+  General:
+    DebugEnable: 
+      - Value: false
+    InfoEnable: 
+      - Value: true
+
+HwAbDio:
+  ConfigSet:
+    - Signal: 
+      Name: Light_DenNhaBep
+      ConnectedTo:
+      - Value:  2  
+      InitState: 
+      - Value:  STD_OFF 
+  General:
+    DebugEnable: 
+      - Value: false
+    InfoEnable: 
+      - Value: true
+
+
+

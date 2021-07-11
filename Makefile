@@ -44,7 +44,8 @@ TARGET		= app
 # which modules (subdirectories) of the project to include in compiling
 MODULES		= driver user mqtt easygpio  
 MODULES	   += Integration Integration/OS Integration/Device Integration/Light
-MODULES	   += Integration/Hass Integration/Conf
+MODULES	   += Integration/Hass Integration/Conf Integration/MqttIf 
+MODULES	   += Integration/HwAbDio Integration/HwAbPwm
 #EXTRA_INCDIR    = include $(BUILD_AREA)/esp-open-sdk/esp-open-lwip/include
 EXTRA_INCDIR    = include
 
@@ -182,6 +183,8 @@ erase:
 	esptool.py --port $(ESPPORT)  erase_flash
 server:
 	-cd firmware && python -m  SimpleHTTPServer 8000
+bct: clean
+	python Integration/CodeGen/CodeGen.py
 monitor:
 	$(FILTEROUTPUT) --port $(ESPPORT) --baud 115200
 

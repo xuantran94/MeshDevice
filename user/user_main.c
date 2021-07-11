@@ -1,3 +1,4 @@
+#define USE_US_TIMER
 #include "c_types.h"
 #include "mem.h"
 #include "ets_sys.h"
@@ -4267,6 +4268,7 @@ void ICACHE_FLASH_ATTR *schedule_netif_poll(struct netif *netif)
 
 void ICACHE_FLASH_ATTR user_init()
 {
+    system_timer_reinit();
     struct ip_info info;
     struct espconn *pCon;
 

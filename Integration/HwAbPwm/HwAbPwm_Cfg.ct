@@ -1,0 +1,7 @@
+#include "Light_Cfg.h"
+#if (HWABPWM_CFG_MODULE_ACTIVE == STD_ON) 
+const hwAbPwmConfig_tst hwAbPwmConfig_ast[HWABPWM_CFG_NUM] =
+{
+<SIGNALS CONFIGURATION>
+};
+#endif

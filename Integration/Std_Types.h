@@ -10,4 +10,7 @@ typedef uint8_t Std_ReturnType;
 #define STD_OFF     0u
 #define STD_ON      (!STD_OFF)
 
+#define False       false
+#define True        true
+
 #endif

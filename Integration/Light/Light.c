@@ -10,6 +10,7 @@ Light_tst light_ast[LIGHT_CFG_NUM_LIGHTS];
 
 Std_ReturnType ICACHE_FLASH_ATTR Light_Init (void)
 {
+    //LIGHT_DEBUG("Light_Init\r\n");
     uint8 lightId_u8;
     for (lightId_u8 = 0; lightId_u8 < LIGHT_CFG_NUM_LIGHTS; lightId_u8++)
     {
@@ -34,7 +35,7 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_Hass_Register(MQTT_Client* client )
         os_sprintf(stateTopic_au8, "%s/light/%s/state", DEVICE_NAME, lightConfig_ast[light_id_u8].lightName_pu8);
         os_sprintf(commandTopic_au8, "%s/light/%s/command", DEVICE_NAME, lightConfig_ast[light_id_u8].lightName_pu8);
         os_sprintf(configTopic_au8, "%s/%s/%s/%s/config", HASS_TOPIC, "light", DEVICE_NAME, lightConfig_ast[light_id_u8].lightName_pu8);
-        os_printf("publish to %s\r\n", configTopic_au8);
+        //LIGHT_DEBUG("publish to %s\r\n", configTopic_au8);
 
         /* {
          "schema":"json",
@@ -62,7 +63,7 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_Hass_Register(MQTT_Client* client )
         commandTopic_au8,                       /* command topic */
         availabilityTopic_au8,                  /* availability topic */
         lightUniqueId_au8);                     /* unique id */
-        os_printf("payload  %s\r\n", payload_au8);
+        //LIGHT_DEBUG("payload  %s\r\n", payload_au8);
         mqtt_pub_str_retain(configTopic_au8, payload_au8);
         MQTT_Subscribe(client, commandTopic_au8, 0);
     }
@@ -91,7 +92,11 @@ Std_ReturnType LightSetBrightness(uint8 lightId_u8, uint8 duty_u8)
     Std_ReturnType retVal_u8 = E_NOT_OK;
     if(lightConfig_ast[lightId_u8].isLightBrighness_b)
     {   
+#if( STD_ON == HWABPWM_CFG_MODULE_ACTIVE )
         retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, duty_u8);
+#else
+        retVal_u8 = E_NOT_OK;
+#endif
     }
     return retVal_u8;
 };

@@ -78,7 +78,7 @@ HwAbDio:
       - Value:  STD_ON 
   General:
     DebugEnable: 
-      - Value: false
+      - Value: true
     InfoEnable: 
       - Value: true
 

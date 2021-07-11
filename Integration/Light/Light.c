@@ -125,6 +125,4 @@ Std_ReturnType Light_Toggle(uint8 lightId)
     }
     return retVal_u8;
 };
-
-
 #endif

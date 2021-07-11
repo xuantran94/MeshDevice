@@ -32,14 +32,14 @@ Light:
     #   - Value:  2
     #   Brighness:
     #   - Value: true
-    - Signal: 
-      Name: DenNhaAn12V
-      FriendlyName: 
-      - Value:  DenNhaAn12V
-      ConnectedTo:
-      - Value:  4
-      Brighness:
-      - Value: true
+    # - Signal: 
+    #   Name: DenNhaAn12V
+    #   FriendlyName: 
+    #   - Value:  DenNhaAn12V
+    #   ConnectedTo:
+    #   - Value:  4
+    #   Brighness:
+    #   - Value: true
   General:
     MqttSupported: 
       - Value: true
@@ -50,12 +50,12 @@ Light:
 
 HwAbPwm:
   ConfigSet:
-    - Signal: 
-      Name: Light_DenNhaBep12V
-      ConnectedTo:
-      - Value:  2
-      InitDuty:
-      - Value:  70
+    # - Signal: 
+    #   Name: Light_DenNhaBep12V
+    #   ConnectedTo:
+    #   - Value:  2
+    #   InitDuty:
+    #   - Value:  70
     # - Signal: 
     #   Name: Light_DenNhaAn12V
     #   ConnectedTo:

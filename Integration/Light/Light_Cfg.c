@@ -10,14 +10,6 @@ const LightConfig_tst lightConfig_ast[LIGHT_CFG_NUM_LIGHTS] =
       False,
       HwAbDio_Light_DenNhaBep,
   },
-  {
-      //DenNhaAn12V
-      "DenNhaAn12V",
-      Light_state_off,
-      4,
-      True,
-      HwAbPwm_Light_DenNhaAn12V,
-  },
 
 };
 #endif

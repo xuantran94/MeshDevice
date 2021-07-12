@@ -24,9 +24,7 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_Hass_Register(MQTT_Client* client )
     uint8 payload_au8[1024];
     uint8 stateTopic_au8[256];
     uint8 lightUniqueId_au8[256];
-    uint8 availabilityTopic_au8[256];
 
-    os_sprintf(availabilityTopic_au8, "%s/availibility", DEVICE_NAME);
     for (light_id_u8= 0; light_id_u8 < LIGHT_CFG_NUM_LIGHTS; light_id_u8++)
     {
         os_sprintf(lightUniqueId_au8, "%s_%s", DEVICE_ID, lightConfig_ast[light_id_u8].lightName_pu8);
@@ -35,11 +33,11 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_Hass_Register(MQTT_Client* client )
         os_sprintf(payload_au8,
         "{\"schema\":\"json\",\"brightness\": %s,\"name\":\"%s\",\"stat_t\":\"%s\",\"cmd_t\":\"%s\",\"avty_t\":\"%s\",\"uniq_id\":\"%s\"}",
         (lightConfig_ast[light_id_u8].isLightBrighness_b? "true" : "false"), /* brighness */
-        lightConfig_ast[light_id_u8].lightName_pu8, /* name */
-        lightConfig_ast[light_id_u8].state_topic_pu8,                             /* state topic */
-        lightConfig_ast[light_id_u8].command_topic_pu8,                           /* command topic */
-        availabilityTopic_au8,                      /* availability topic */
-        lightUniqueId_au8);                         /* unique id */
+        lightConfig_ast[light_id_u8].lightName_pu8,     /* name */
+        lightConfig_ast[light_id_u8].state_topic_pu8,   /* state topic */
+        lightConfig_ast[light_id_u8].command_topic_pu8, /* command topic */
+        HASS_DEVICE_AVAILABILITY_TOPIC,                 /* availability topic */
+        lightUniqueId_au8);                             /* unique id */
         LIGHT_DEBUG("payload  %s\r\n", payload_au8);
         mqtt_pub_str_retain(configTopic_au8, payload_au8);
         MQTT_Subscribe(client, (char*) lightConfig_ast[light_id_u8].command_topic_pu8, 0);

@@ -27,6 +27,7 @@ def generate_cfg_h(conf_data):
     cfg_h_setting = ""
     cfg_h_setting += "#define DEVICE_NAME        \"" + str(cdlib_get_value(conf_data['HassDevice']['General']['Name'],1,1)) +"\"\r\n"
     cfg_h_setting += "#define DEVICE_ID          \"" + str(cdlib_get_value(conf_data['HassDevice']['General']['Id'],1,1)) +"\"\r\n"
+    cfg_h_setting += "#define HASS_DEVICE_AVAILABILITY_TOPIC  \"" + str(cdlib_get_value(conf_data['HassDevice']['General']['Name'],1,1)) +"/avai"+"\"\r\n"
     cfg_h_file_content = cfg_h_file_content.replace("<CONFIGURATION SETTING>", cfg_h_setting)
     cfg_ht_file.close()
     # generate the files

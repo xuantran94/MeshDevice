@@ -19,7 +19,7 @@ Light:
       Brighness:
       - Value: false
       InitState:
-      - Value: STD_OFF
+      - Value: STD_ON
     - Signal: 
       Name: DenNhaAn
       FriendlyName: 

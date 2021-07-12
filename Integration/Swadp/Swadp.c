@@ -9,6 +9,5 @@ Std_ReturnType ICACHE_FLASH_ATTR Swadp_Ini   (void)
 };
 void ICACHE_FLASH_ATTR Swadp_100ms (void)
 {
-    Light_Toggle(0);
-    //os_printf("swadp_100ms");
+    //Light_Toggle(0);
 };

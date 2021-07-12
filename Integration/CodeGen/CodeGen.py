@@ -17,11 +17,21 @@ from HwAbDio_Conf import hwabdio_deviceinfo_forward, hwabdio_generate
 with open('Integration/CodeGen/Conf.yaml') as f:
     conf_data = yaml.load(f, Loader=SafeLoader)
 
+# print('Raw Conf data:')
+# print(str(conf_data))
+
 conf_data = hwabpwm_deviceinfo_forward(conf_data)
 conf_data = hwabdio_deviceinfo_forward(conf_data)
 conf_data = light_forward(conf_data)
+
+# print('Final Conf data:')
+# print(str(conf_data))
+
+# print(conf_data['Light'])
 light_generate(conf_data)
+# print(conf_data['HwAbPwm'])
 hwabpwm_generate(conf_data)
+# print(conf_data['HwAbDio'])
 hwabdio_generate(conf_data)
 
 # Dump the final configuration data for the validation only

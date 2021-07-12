@@ -8,38 +8,52 @@ Light:
       - Value:  12
       Brighness:
       - Value: false
-    # - Signal: 
-    #   Name: DenNhaAn
-    #   FriendlyName: 
-    #   - Value:  DenNhaAn
-    #   ConnectedTo:
-    #   - Value:  13
-    #   Brighness:
-    #   - Value: false
-    # - Signal: 
-    #   Name: DenSauHe
-    #   FriendlyName: 
-    #   - Value:  DenSauHe
-    #   ConnectedTo:
-    #   - Value:  14
-    #   Brighness:
-    #   - Value: false
-    # - Signal: 
-    #   Name: DenNhaBep12V
-    #   FriendlyName: 
-    #   - Value: DenNhaBep12V
-    #   ConnectedTo:
-    #   - Value:  2
-    #   Brighness:
-    #   - Value: true
-    # - Signal: 
-    #   Name: DenNhaAn12V
-    #   FriendlyName: 
-    #   - Value:  DenNhaAn12V
-    #   ConnectedTo:
-    #   - Value:  4
-    #   Brighness:
-    #   - Value: true
+      InitState:
+      - Value: STD_OFF
+    - Signal: 
+      Name: DenNhaAn
+      FriendlyName: 
+      - Value:  DenNhaAn
+      ConnectedTo:
+      - Value:  13
+      Brighness:
+      - Value: false
+      InitState:
+      - Value: STD_OFF
+    - Signal: 
+      Name: DenSauHe
+      FriendlyName: 
+      - Value:  DenSauHe
+      ConnectedTo:
+      - Value:  14
+      Brighness:
+      - Value: false
+      InitState:
+      - Value: STD_OFF
+    - Signal: 
+      Name: DenNhaBep12V
+      FriendlyName: 
+      - Value: DenNhaBep12V
+      ConnectedTo:
+      - Value:  2
+      Brighness:
+      - Value: true
+      InitState:
+      - Value: STD_OFF
+      InitDuty:
+      - Value: 0
+    - Signal: 
+      Name: DenNhaAn12V
+      FriendlyName: 
+      - Value:  DenNhaAn12V
+      ConnectedTo:
+      - Value:  4
+      Brighness:
+      - Value: true
+      InitState:
+      - Value: STD_OFF
+      InitDuty:
+      - Value: 0
   General:
     MqttSupported: 
       - Value: true
@@ -48,39 +62,19 @@ Light:
     InfoEnable: 
       - Value: true
 
-HwAbPwm:
-  ConfigSet:
-    # - Signal: 
-    #   Name: Light_DenNhaBep12V
-    #   ConnectedTo:
-    #   - Value:  2
-    #   InitDuty:
-    #   - Value:  70
-    # - Signal: 
-    #   Name: Light_DenNhaAn12V
-    #   ConnectedTo:
-    #   - Value:  4
-    #   InitDuty:
-    #   - Value:  0     
+HwAbPwm: 
   General:
     DebugEnable: 
-      - Value: false
-    InfoEnable: 
       - Value: true
+    InfoEnable: 
+      - Value: false
 
 HwAbDio:
-  ConfigSet:
-    - Signal: 
-      Name: Light_DenNhaBep
-      ConnectedTo:
-      - Value:  2  
-      InitState: 
-      - Value:  STD_ON 
   General:
     DebugEnable: 
       - Value: true
     InfoEnable: 
-      - Value: true
+      - Value: false
 
 
 

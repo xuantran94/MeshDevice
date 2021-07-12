@@ -21,6 +21,7 @@ def generate_report(conf_data):
             report_content += "    Signal: "+signal['Name']+"\r\n"
             report_content += "         ConnectedTo: "+ str(cdlib_get_value(signal['ConnectedTo'],1,1))+"\r\n"
             report_content += "         InitDuty   : "+ str(cdlib_get_value(signal['InitDuty'],1,1))+"\r\n"
+            report_content += "         InitState  : "+ str(cdlib_get_value(signal['InitState'],1,1))+"\r\n"
 
     report_file = open(os.path.join(dir_path,"HwAbPwm_Report.txt"), "w")
     report_file.write(report_content)

@@ -3,12 +3,36 @@ from io import StringIO
 import sys
 sys.path.insert(0, '/Users/tranxuan/Nextcloud/HDD/xuantran/Workspace/02_SW/MeshDevice/Integration/CodeGen')
 
-from CodGenLib import cdlib_get_value
+from CodGenLib import cdlib_get_value, cdlib_push
 import os 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 def light_forward(conf_data):
     print("- light_forward:")
+    if( not conf_data['Light']['ConfigSet'] ):
+        print("Component is deactivated!\r\n")
+    else:
+        # print(" Pushed_data:")
+        hwabdio_pushed_data = {'HwAbDio':{'ConfigSet':[]}}
+        hwabpwm_pushed_data = {'HwAbPwm':{'ConfigSet':[]}}
+        for signal in conf_data['Light']['ConfigSet']:
+            # Brighness is enable 
+            if (cdlib_get_value(signal['Brighness'],1,1)):
+                signal_pushed_data = {'Signal': None}
+                signal_pushed_data['Name']        = 'Light_' + signal['Name']
+                signal_pushed_data['ConnectedTo'] = signal['ConnectedTo']
+                signal_pushed_data['InitState']   = signal['InitState']
+                signal_pushed_data['InitDuty']    = signal['InitDuty']
+                hwabpwm_pushed_data['HwAbPwm']['ConfigSet'].append(signal_pushed_data)
+            else:
+                signal_pushed_data = {'Signal': None}
+                signal_pushed_data['Name']        = 'Light_' + signal['Name']
+                signal_pushed_data['ConnectedTo'] = signal['ConnectedTo']
+                signal_pushed_data['InitState']   = signal['InitState']
+                hwabdio_pushed_data['HwAbDio']['ConfigSet'].append(signal_pushed_data)
+       
+        conf_data = dict(cdlib_push(conf_data, hwabdio_pushed_data))
+        conf_data = dict(cdlib_push(conf_data, hwabpwm_pushed_data))
     return conf_data
 
 def generate_report(conf_data):
@@ -20,6 +44,9 @@ def generate_report(conf_data):
         for signal in conf_data['Light']['ConfigSet']:
             report_content += "    Signal: Light_"+signal['Name']+"\r\n"
             report_content += "         ConnectedTo: "+ str(cdlib_get_value(signal['ConnectedTo'],1,1))+"\r\n"
+            report_content += "         InitState : "+ str(cdlib_get_value(signal['InitState'],1,1))+"\r\n"
+            if (cdlib_get_value(signal['Brighness'],1,1)):
+                report_content += "         InitDuty  : "+ str(cdlib_get_value(signal['InitDuty'],1,1))+"\r\n"
             report_content += "         Brightness:  "+ str(cdlib_get_value(signal['Brighness'],1,1))+"\r\n"
 
     report_file = open(os.path.join(dir_path,"Light_Report.txt"), "w")

@@ -8,15 +8,9 @@ Std_ReturnType ICACHE_FLASH_ATTR OS_mqttConnected_ISR_Cfg(MQTT_Client* client)
 };
 void ICACHE_FLASH_ATTR OS_Init_Cfg(void)
 {
-#if( STD_ON == LIGHT_CFG_MODULE_ACTIVE )
-    Light_Init();
-#endif
-#if( STD_ON == HWABPWM_CFG_MODULE_ACTIVE )
-    HwAbPwm_Init();
-#endif
-#if( STD_ON == HWABDIO_CFG_MODULE_ACTIVE )
-    HwAbDio_Init();
-#endif
+    (void) HwAbPwm_Init();
+    (void) HwAbDio_Init();
+    (void) Light_Init();
 };
 void ICACHE_FLASH_ATTR OS_IniEnd_Cfg(void)
 {
@@ -33,9 +27,7 @@ void ICACHE_FLASH_ATTR OS_Task_1ms_Cfg(void)
 
 void ICACHE_FLASH_ATTR OS_10us_Task_Cfg(void)
 {
-#if( STD_ON == HWABPWM_CFG_MODULE_ACTIVE )
     HwAbPwm_Proc_10us();
-#endif
 };
 void ICACHE_FLASH_ATTR OS_100ms_Task_Cfg(void)
 {

@@ -1,3 +1,13 @@
+Hass:
+  General:
+    Topic: 
+      - Value: homeassistant
+HassDevice:
+  General:
+    Id: 
+      - Value: "00000001"
+    Name: 
+      - Value: TestDevice1
 Light:
   ConfigSet:
     - Signal: 

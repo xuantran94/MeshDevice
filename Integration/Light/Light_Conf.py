@@ -1,10 +1,11 @@
 
 from io import StringIO
 import sys
-sys.path.insert(0, '/Users/tranxuan/Nextcloud/HDD/xuantran/Workspace/02_SW/MeshDevice/Integration/CodeGen')
-
-from CodGenLib import cdlib_get_value, cdlib_push
+import json
 import os 
+sys.path.insert(0, '/Users/tranxuan/Nextcloud/HDD/xuantran/Workspace/02_SW/MeshDevice/Integration/CodeGen')
+from CodGenLib import cdlib_get_value, cdlib_push
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 def light_forward(conf_data):
@@ -106,10 +107,20 @@ def generate_cfg_c(conf_data):
         return
     else:
         for signal in conf_data['Light']['ConfigSet']:
+            cmd_topic   = cdlib_get_value(conf_data['HassDevice']['General']['Name'],1,1)
+            cmd_topic  += "/light/"
+            cmd_topic  += signal['Name']
+            state_topic = cmd_topic
+
+            cmd_topic   += "/cmd"
+            state_topic += "/st"
+
             cfg_c_signals += "  {\r\n"
             cfg_c_signals += "      //" + cdlib_get_value(signal['FriendlyName'],1,1) + "\r\n"
             cfg_c_signals += "      \"" + cdlib_get_value(signal['FriendlyName'],1,1) +"\",\r\n"
-            cfg_c_signals += "      Light_state_off,\r\n"
+            cfg_c_signals += "      \"" + cmd_topic +"\",\r\n"
+            cfg_c_signals += "      \"" + state_topic +"\",\r\n"
+            cfg_c_signals += "      " + str(cdlib_get_value(signal['InitState'],1,1))+",\r\n"
             cfg_c_signals += "      " + str(cdlib_get_value(signal['ConnectedTo'],1,1)) +",\r\n"
             cfg_c_signals += "      " + str(cdlib_get_value(signal['Brighness'],1,1)) +",\r\n"
             if(cdlib_get_value(signal['Brighness'],1,1)):

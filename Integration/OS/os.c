@@ -27,7 +27,6 @@ Std_ReturnType ICACHE_FLASH_ATTR OS_Ini (void)
 void ICACHE_FLASH_ATTR OS_100ms_Task(void *arg)
 {
     OS_100ms_Task_Cfg();
-    //os_printf("OS_100ms\r\n");
 };
 Std_ReturnType ICACHE_FLASH_ATTR OS_IniEnd(void)
 {

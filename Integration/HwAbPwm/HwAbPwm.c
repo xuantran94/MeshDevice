@@ -8,7 +8,7 @@ hwAbPwm_tst hwAbPwm_ast[HWABPWM_CFG_NUM];
 
 Std_ReturnType ICACHE_FLASH_ATTR HwAbPwm_Init (void)
 {
-    HWABPWM_DEBUG("Init");
+    HWABPWM_DEBUG("Init\r\n");
     Std_ReturnType retVal_u8 = E_NOT_OK;
     uint8 hwAbPwmId_u8;
     for( hwAbPwmId_u8 =0; hwAbPwmId_u8 < HWABPWM_CFG_NUM; hwAbPwmId_u8++)
@@ -25,7 +25,7 @@ Std_ReturnType ICACHE_FLASH_ATTR HwAbPwm_Init (void)
 };
 Std_ReturnType ICACHE_FLASH_ATTR HwAbPwm_SetDuty (uint8 hwAbPwmId_u8, uint8 duty_u8)
 {
-    HWABPWM_DEBUG("Set duty ");
+    HWABPWM_DEBUG("Set duty \r\n");
     hwAbPwm_ast[hwAbPwmId_u8].duty_u8 = duty_u8;
     return E_OK;
 };

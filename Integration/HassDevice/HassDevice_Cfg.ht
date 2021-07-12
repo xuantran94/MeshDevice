@@ -1,0 +1,8 @@
+#ifndef _HASS_DEVICE_CFG_H_
+#define _HASS_DEVICE_CFG_H_
+
+#include "Std_Types.h"
+
+<CONFIGURATION SETTING>
+
+#endif

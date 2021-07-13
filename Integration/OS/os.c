@@ -12,6 +12,7 @@ static os_timer_t ptimer_100ms_Task;
 static os_timer_t ptimer_10ms_Task;
 static os_timer_t ptimer_1ms_Task;
 static os_timer_t ptimer_10us_Task;
+static os_timer_t ptimer_10s_Task;
 
 Std_ReturnType ICACHE_FLASH_ATTR OS_Init(void)
 {
@@ -28,6 +29,10 @@ void ICACHE_FLASH_ATTR OS_100ms_Task(void *arg)
 {
     OS_100ms_Task_Cfg();
 };
+void ICACHE_FLASH_ATTR OS_10s_Task(void *arg)
+{
+    OS_10s_Task_Cfg();
+};
 Std_ReturnType ICACHE_FLASH_ATTR OS_IniEnd(void)
 {
     os_printf("OS_IniEnd\r\n");
@@ -41,6 +46,9 @@ Std_ReturnType ICACHE_FLASH_ATTR OS_IniEnd(void)
 
     os_timer_setfn(&ptimer_100ms_Task, OS_100ms_Task, 0);
     os_timer_arm(&ptimer_100ms_Task, 100, true);
+
+    os_timer_setfn(&ptimer_10s_Task, OS_10s_Task, 0);
+    os_timer_arm(&ptimer_10s_Task, 10000, true);
     return E_OK;
 };
 /* cyclic tasks */
@@ -70,7 +78,12 @@ Std_ReturnType ICACHE_FLASH_ATTR OS_mqttConnected_ISR(MQTT_Client* client)
 };
 Std_ReturnType ICACHE_FLASH_ATTR OS_mqttData_ISR(const char *topic, uint32_t topic_len, const char *data, uint32_t data_len)
 {
+    os_printf("mqtt data callback\r\n");
+};
 
+Std_ReturnType ICACHE_FLASH_ATTR OS_mqttData_Init(MQTT_Client* client)
+{
+    return OS_mqttData_Init_Cfg(client);
 };
 
 

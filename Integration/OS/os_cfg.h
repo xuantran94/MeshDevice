@@ -16,5 +16,6 @@ void ICACHE_FLASH_ATTR OS_Task_10ms_Cfg(void);
 void ICACHE_FLASH_ATTR OS_Task_1ms_Cfg(void);
 void ICACHE_FLASH_ATTR OS_10us_Task_Cfg(void);
 void ICACHE_FLASH_ATTR OS_100ms_Task_Cfg(void);
+void ICACHE_FLASH_ATTR OS_Task_10s_Cfg(void);
 
 #endif

@@ -4545,6 +4545,7 @@ void ICACHE_FLASH_ATTR user_init()
         uint8_t buf[256];
         os_sprintf(buf, "%s/status", config.mqtt_prefix);
         MQTT_InitLWT(&mqttClient, buf, "offline", 0, 1);
+        OS_mqttData_Init(&mqttClient);
         MQTT_OnConnected(&mqttClient, mqttConnectedCb);
         MQTT_OnDisconnected(&mqttClient, mqttDisconnectedCb);
         MQTT_OnPublished(&mqttClient, mqttPublishedCb);

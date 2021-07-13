@@ -5,7 +5,15 @@ Std_ReturnType ICACHE_FLASH_ATTR OS_mqttConnected_ISR_Cfg(MQTT_Client* client)
 {
     Std_ReturnType retVal_u8;
     retVal_u8 = Light_Hass_Register(client);
+    retVal_u8 = HassDevice_SetOnline(client);
+    return retVal_u8;
 };
+Std_ReturnType ICACHE_FLASH_ATTR OS_mqttData_Init_Cfg(MQTT_Client* client)
+{
+    HassDevice_Init(client);
+    MqttIf_Init(client);
+    return E_OK;
+}
 void ICACHE_FLASH_ATTR OS_Init_Cfg(void)
 {
     (void) HwAbPwm_Init();
@@ -32,4 +40,8 @@ void ICACHE_FLASH_ATTR OS_10us_Task_Cfg(void)
 void ICACHE_FLASH_ATTR OS_100ms_Task_Cfg(void)
 {
     Swadp_100ms();
+}
+void ICACHE_FLASH_ATTR OS_10s_Task_Cfg(void)
+{
+    HassDevice_Proc();
 }

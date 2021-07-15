@@ -31,7 +31,7 @@ SDK_BASE	?= $(CURDIR)/esp-open-sdk/sdk
 # # esptool.py path and port
 ESPTOOL		?= $(XTENSA_TOOLS_ROOT)/esptool.py
 
-#ESPPORT ?= /dev/tty.SLAB_USBtoUART
+#ESPPORT ?= /dev/tty.SLAB_USBtoUARTF
 ESPPORT ?= /dev/tty.wchusbserial1420
 #ESPPORT ?= /dev/tty.wchusbserial14110
 #ESPTOOLBAUD	?= 115200

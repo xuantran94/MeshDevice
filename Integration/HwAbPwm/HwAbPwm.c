@@ -25,7 +25,7 @@ Std_ReturnType ICACHE_FLASH_ATTR HwAbPwm_Init (void)
 };
 Std_ReturnType ICACHE_FLASH_ATTR HwAbPwm_SetDuty (uint8 hwAbPwmId_u8, uint8 duty_u8)
 {
-    HWABPWM_DEBUG("Set duty \r\n");
+    HWABPWM_DEBUG("Set duty to %d\r\n",duty_u8);
     hwAbPwm_ast[hwAbPwmId_u8].duty_u8 = duty_u8;
     return E_OK;
 };

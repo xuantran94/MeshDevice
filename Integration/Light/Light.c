@@ -56,7 +56,10 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_GetState(uint8 lightId_u8, uint8 *state_u
 Std_ReturnType ICACHE_FLASH_ATTR Light_SetState(uint8 lightId_u8, uint8 state_u8)
 {
     Std_ReturnType retVal_u8 = E_NOT_OK;
+    uint8 ligtStateCurr_u8;
+    retVal_u8 = Light_GetState(lightId_u8, &ligtStateCurr_u8);
     light_ast[lightId_u8].state_u8 = state_u8;
+
     if(!lightConfig_ast[lightId_u8].isLightBrighness_b)
     {
         light_ast[lightId_u8].state_u8 = state_u8;
@@ -64,23 +67,47 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_SetState(uint8 lightId_u8, uint8 state_u8
     }
     else
     {
-        if(state_u8 == STD_ON)
+        if((state_u8 == STD_ON) && (STD_OFF == ligtStateCurr_u8))
         {
-            retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, light_ast[lightId_u8].duty_u8);
+            uint8 brightness_payload_au8[255];
+            os_sprintf(brightness_payload_au8, "{\"state\":\"ON\",\"brightness\":%d}", light_ast[lightId_u8].duty_u8);
+            retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, light_ast[lightId_u8].duty_u8*100u/255u);
+             MqttIf_Publish(lightConfig_ast[lightId_u8].state_topic_pu8, brightness_payload_au8, strlen(brightness_payload_au8) , 0, 1);
+            return retVal_u8;
         }else
         {
             retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, STD_OFF);
         }
         
     }
+
+
+    if(state_u8 == STD_ON)
+    {
+        MqttIf_Publish(lightConfig_ast[lightId_u8].state_topic_pu8, "{\"state\":\"ON\"}", strlen("{\"state\":\"ON\"}") , 0, 1);
+    }
+    else
+    {
+        MqttIf_Publish(lightConfig_ast[lightId_u8].state_topic_pu8, "{\"state\":\"OFF\"}", strlen("{\"state\":\"OFF\"}") , 0, 1);
+    }
+    
+    
     return retVal_u8;
 };
 Std_ReturnType ICACHE_FLASH_ATTR Light_SetBrightness(uint8 lightId_u8, uint8 duty_u8)
 {
     Std_ReturnType retVal_u8 = E_NOT_OK;
+
+    uint8 ligtStateCurr_u8;
+    retVal_u8 = Light_GetState(lightId_u8, &ligtStateCurr_u8);
+
     if(lightConfig_ast[lightId_u8].isLightBrighness_b)
     {   
-        retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, duty_u8);
+        light_ast[lightId_u8].duty_u8 = duty_u8;
+        if( (retVal_u8 == E_OK) && ( ligtStateCurr_u8 == STD_ON))
+        {
+            retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, light_ast[lightId_u8].duty_u8*100u/255u);
+        }
     }
     return retVal_u8;
 };
@@ -95,6 +122,7 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_Toggle(uint8 lightId_u8)
     }
     return retVal_u8;
 };
+//TODO: cehck the json. It is not saftify me right now
 void ICACHE_FLASH_ATTR Light_Data_ISR_Cfg(const char *topic_pu8, const char *data_pu8 )
 {
     
@@ -105,9 +133,9 @@ void ICACHE_FLASH_ATTR Light_Data_ISR_Cfg(const char *topic_pu8, const char *dat
     {
         if((0u == strcmp(lightConfig_ast[lightId_u8].command_topic_pu8, topic_pu8)))
         {
-            LIGHT_DEBUG("action on light %d\r\n", lightId_u8);
+            LIGHT_DEBUG("action on light %d with data: %s\r\n", lightId_u8,data_pu8);
 
-            int r;
+            int r, i, j;
             jsmn_parser p;
             jsmntok_t t[128]; /* We expect no more than 128 tokens */
             jsmn_init(&p);
@@ -117,6 +145,42 @@ void ICACHE_FLASH_ATTR Light_Data_ISR_Cfg(const char *topic_pu8, const char *dat
             {
                 LIGHT_DEBUG("Failed to parse JSON: %d\n", r);
                 return;
+            }
+            for (i = 1; i < r; i++) 
+            {
+                if (jsoneq(data_pu8, &t[i], "state") == 0u) 
+                {
+                    
+                    uint8 stateDataLen_u8 = t[i+1].end - t[i+1].start;
+                    uint8 stateData_au8[stateDataLen_u8];
+                    stateData_au8[stateDataLen_u8] = 0u;
+                    for (j = 0; j< stateDataLen_u8; j++)
+                    {
+                        stateData_au8[j] = data_pu8[j+t[i+1].start];
+                    }
+
+                    LIGHT_DEBUG("reQuest state is detected %s\r\n", stateData_au8);
+                    if(0u == strcmp(stateData_au8, "ON"))
+                    {
+                        Light_SetState(lightId_u8, STD_ON);
+                    }
+                    else
+                    {
+                        Light_SetState(lightId_u8, STD_OFF);
+                    }
+                    i++;
+                } else if (jsoneq(data_pu8, &t[i], "brightness") == 0u) 
+                {
+                    uint8 brighness_u8 = 0u; 
+                    for (j = t[i+1].start; j< t[i+1].end; j++)
+                    {
+                        // LIGHT_DEBUG("brightness data %d\r\n", (data_pu8[j] - 48u));
+                        brighness_u8 = brighness_u8*10u + (data_pu8[j] - 48u) ;
+                    }
+                    LIGHT_DEBUG("reQuest brighness is detected %d\r\n",brighness_u8);
+                    Light_SetBrightness(lightId_u8, brighness_u8);
+                    i++;
+                } 
             }
             break;
         }

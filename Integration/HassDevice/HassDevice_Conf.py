@@ -39,7 +39,7 @@ def generate_cfg_c(conf_data):
 
 
 def hassdevice_generate(conf_data):
-    print("- hass_generate:")
+    print("- HassDevice_generate:")
     generate_report(conf_data)
     generate_cfg_h(conf_data)
     generate_cfg_c(conf_data)

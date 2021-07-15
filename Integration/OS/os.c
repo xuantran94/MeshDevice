@@ -72,18 +72,31 @@ void ICACHE_FLASH_ATTR OS_10us_Task(void *arg)
     OS_10us_Task_Cfg();
 };
 /* ISRs */
-Std_ReturnType ICACHE_FLASH_ATTR OS_mqttConnected_ISR(MQTT_Client* client)
+void ICACHE_FLASH_ATTR OS_mqttConnected_ISR(MQTT_Client* client)
 {
     OS_mqttConnected_ISR_Cfg(client);
 };
-Std_ReturnType ICACHE_FLASH_ATTR OS_mqttData_ISR(const char *topic, uint32_t topic_len, const char *data, uint32_t data_len)
+void ICACHE_FLASH_ATTR OS_mqttData_ISR(const char *topic, uint32_t topic_len, const char *data, uint32_t data_len)
 {
-    os_printf("mqtt data callback\r\n");
+    uint8 lc_topic_pu8[topic_len];
+    uint8 lc_data_pu8[data_len];
+    uint32 i;
+    lc_topic_pu8[topic_len] = 0u;
+    lc_data_pu8[data_len] = 0u;
+    for ( i = 0; i < topic_len; i++)
+    {
+        lc_topic_pu8[i] = topic[i];
+    }
+    for ( i = 0; i < data_len; i++)
+    {
+        lc_data_pu8[i] = data[i];
+    }
+    OS_mqttData_ISR_Cfg(lc_topic_pu8, lc_data_pu8);
 };
 
-Std_ReturnType ICACHE_FLASH_ATTR OS_mqttData_Init(MQTT_Client* client)
+void ICACHE_FLASH_ATTR OS_mqttData_Init(MQTT_Client* client)
 {
-    return OS_mqttData_Init_Cfg(client);
+    OS_mqttData_Init_Cfg(client);
 };
 
 

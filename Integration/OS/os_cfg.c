@@ -1,12 +1,11 @@
 #include "os_cfg.h"
 
 
-Std_ReturnType ICACHE_FLASH_ATTR OS_mqttConnected_ISR_Cfg(MQTT_Client* client)
+void ICACHE_FLASH_ATTR OS_mqttConnected_ISR_Cfg(MQTT_Client* client)
 {
     Std_ReturnType retVal_u8;
     retVal_u8 = Light_Hass_Register(client);
     retVal_u8 = HassDevice_SetOnline(client);
-    return retVal_u8;
 };
 Std_ReturnType ICACHE_FLASH_ATTR OS_mqttData_Init_Cfg(MQTT_Client* client)
 {
@@ -44,4 +43,8 @@ void ICACHE_FLASH_ATTR OS_100ms_Task_Cfg(void)
 void ICACHE_FLASH_ATTR OS_10s_Task_Cfg(void)
 {
     HassDevice_Proc();
+}
+void ICACHE_FLASH_ATTR OS_mqttData_ISR_Cfg(const char *topic, const char *data )
+{
+    Light_Data_ISR_Cfg(topic, data);
 }

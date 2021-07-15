@@ -22,10 +22,11 @@ from HassDevice_Conf import hassdevice_forward, hassdevice_generate
 with open('Integration/CodeGen/Conf.yaml') as f:
     conf_data = yaml.load(f, Loader=SafeLoader)
 
-conf_data = hass_forward(conf_data)
-conf_data = hassdevice_forward(conf_data)
+print("--------------Code generation is started----------------")
 conf_data = hwabpwm_deviceinfo_forward(conf_data)
 conf_data = hwabdio_deviceinfo_forward(conf_data)
+conf_data = hass_forward(conf_data)
+conf_data = hassdevice_forward(conf_data)
 conf_data = light_forward(conf_data)
 
 hass_generate(conf_data)
@@ -33,6 +34,8 @@ hassdevice_generate(conf_data)
 light_generate(conf_data)
 hwabpwm_generate(conf_data)
 hwabdio_generate(conf_data)
+print("--------------Code generation is finished----------------")
+
 
 # Dump the final configuration data for the validation only
 fwdFile = yaml.dump(conf_data)

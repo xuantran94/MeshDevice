@@ -42,7 +42,7 @@ ESPTOOLOPTS	= -ff 26m -fm dout -fs 32m
 TARGET		= app
 
 # which modules (subdirectories) of the project to include in compiling
-MODULES		= driver user mqtt easygpio  
+MODULES		= driver user mqtt easygpio  jsmn
 MODULES	   += Integration Integration/OS Integration/HassDevice Integration/Light
 MODULES	   += Integration/Hass Integration/Conf Integration/MqttIf 
 MODULES	   += Integration/HwAbDio Integration/HwAbPwm Integration/Swadp
@@ -55,8 +55,8 @@ EXTRA_INCDIR    = include
 LIBS		= c gcc hal pp phy net80211 lwip_open_napt wpa wpa2 main
 
 # compiler flags using during compilation of source files
-CFLAGS		= -Os -g -O2 -Wpointer-arith -Wundef -Werror -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH -DLWIP_OPEN_SRC -DUSE_OPTIMIZE_PRINTF
-# CFLAGS		= -Os -g -O2 -Wpointer-arith -Wundef  -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH -DLWIP_OPEN_SRC -DUSE_OPTIMIZE_PRINTF
+# CFLAGS		= -Os -g -O2 -Wpointer-arith -Wundef -Werror -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH -DLWIP_OPEN_SRC -DUSE_OPTIMIZE_PRINTF
+CFLAGS		= -Os -g -O2 -Wpointer-arith -Wundef  -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH -DLWIP_OPEN_SRC -DUSE_OPTIMIZE_PRINTF
 
 # linker flags used to generate the main object file
 LDFLAGS		= -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static -L.
@@ -191,5 +191,7 @@ monitor:
 clean:
 	$(Q) rm -rf $(FW_BASE) $(BUILD_BASE)
 	$(Q) find . -name "*~" -print0 | xargs -0 rm -rf
+show:
+	xtensa-lx106-elf-nm -av yourprogram.elf | uniq -u | grep "^4010*"
 
 $(foreach bdir,$(BUILD_DIR),$(eval $(call compile-objects,$(bdir))))

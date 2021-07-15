@@ -23,6 +23,4 @@ typedef struct
     uint8                     duty_u8;
 }Light_tst;
 
-
-
 #endif

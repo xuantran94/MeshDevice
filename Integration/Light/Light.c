@@ -3,6 +3,8 @@
 #if( STD_ON == LIGHT_CFG_MODULE_ACTIVE )
 
 #include "osapi.h"
+#include "string.h" 
+#include "jsmn.h"
 
 Light_tst light_ast[LIGHT_CFG_NUM_LIGHTS];
 
@@ -60,19 +62,17 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_SetState(uint8 lightId_u8, uint8 state_u8
         light_ast[lightId_u8].state_u8 = state_u8;
         retVal_u8 = HwAbDio_Set(lightConfig_ast[lightId_u8].driverSignalId_u8, state_u8);
     }
-
-
-    // if(lightConfig_ast[lightId_u8].isLightBrighness_b)
-    // {
-    //     if(state_u8 == Light_state_on)
-    //     {
-    //         retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, light_ast[lightId_u8].duty_u8);
-    //     }else
-    //     {
-    //         retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, 0u);
-    //     }
+    else
+    {
+        if(state_u8 == STD_ON)
+        {
+            retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, light_ast[lightId_u8].duty_u8);
+        }else
+        {
+            retVal_u8 = HwAbPwm_SetDuty(lightConfig_ast[lightId_u8].driverSignalId_u8, STD_OFF);
+        }
         
-    // }
+    }
     return retVal_u8;
 };
 Std_ReturnType ICACHE_FLASH_ATTR Light_SetBrightness(uint8 lightId_u8, uint8 duty_u8)
@@ -84,15 +84,42 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_SetBrightness(uint8 lightId_u8, uint8 dut
     }
     return retVal_u8;
 };
-Std_ReturnType ICACHE_FLASH_ATTR Light_Toggle(uint8 lightId)
+Std_ReturnType ICACHE_FLASH_ATTR Light_Toggle(uint8 lightId_u8)
 {
     uint8 ligtStateCurr_u8;
     Std_ReturnType retVal_u8;
-    retVal_u8 = Light_GetState(lightId, &ligtStateCurr_u8);
+    retVal_u8 = Light_GetState(lightId_u8, &ligtStateCurr_u8);
     if(retVal_u8 == E_OK)
     {
-        retVal_u8 = Light_SetState(lightId, !ligtStateCurr_u8);
+        retVal_u8 = Light_SetState(lightId_u8, !ligtStateCurr_u8);
     }
     return retVal_u8;
+};
+void ICACHE_FLASH_ATTR Light_Data_ISR_Cfg(const char *topic_pu8, const char *data_pu8 )
+{
+    
+    uint8 lightId_u8;
+
+    // LIGHT_DEBUG("ISR at topic: %s\r\n data: %s\r\n",lc_topic_pu8,lc_data_pu8);
+    for ( lightId_u8 =0; lightId_u8 < LIGHT_CFG_NUM_LIGHTS; lightId_u8++)
+    {
+        if((0u == strcmp(lightConfig_ast[lightId_u8].command_topic_pu8, topic_pu8)))
+        {
+            LIGHT_DEBUG("action on light %d\r\n", lightId_u8);
+
+            int r;
+            jsmn_parser p;
+            jsmntok_t t[128]; /* We expect no more than 128 tokens */
+            jsmn_init(&p);
+            r = jsmn_parse(&p, data_pu8, strlen(data_pu8), t,
+                 sizeof(t) / sizeof(t[0]));
+            if (r < 0) 
+            {
+                LIGHT_DEBUG("Failed to parse JSON: %d\n", r);
+                return;
+            }
+            break;
+        }
+    }
 };
 #endif

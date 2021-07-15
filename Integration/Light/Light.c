@@ -80,8 +80,6 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_SetState(uint8 lightId_u8, uint8 state_u8
         }
         
     }
-
-
     if(state_u8 == STD_ON)
     {
         MqttIf_Publish(lightConfig_ast[lightId_u8].state_topic_pu8, "{\"state\":\"ON\"}", strlen("{\"state\":\"ON\"}") , 0, 1);
@@ -90,7 +88,6 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_SetState(uint8 lightId_u8, uint8 state_u8
     {
         MqttIf_Publish(lightConfig_ast[lightId_u8].state_topic_pu8, "{\"state\":\"OFF\"}", strlen("{\"state\":\"OFF\"}") , 0, 1);
     }
-    
     
     return retVal_u8;
 };
@@ -115,6 +112,7 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_Toggle(uint8 lightId_u8)
 {
     uint8 ligtStateCurr_u8;
     Std_ReturnType retVal_u8;
+    //TODO: Check the filter time
     retVal_u8 = Light_GetState(lightId_u8, &ligtStateCurr_u8);
     if(retVal_u8 == E_OK)
     {

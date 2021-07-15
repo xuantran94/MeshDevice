@@ -81,6 +81,9 @@ def generate_cfg_h(conf_data):
             cfg_h_setting += on_setting
         else:
             cfg_h_setting += off_setting
+        
+        cfg_h_setting += "#define LIGHT_TOGGLE_FILTER_TIME  " + cdlib_get_value(conf_data['Light']['General']['ToggleFilterTime'],1,1)+"\r\n"
+
 
         # number of signal
         cfg_h_setting += "#define LIGHT_CFG_NUM_LIGHTS    " + str(len(conf_data['Light']['ConfigSet'])) +'u'

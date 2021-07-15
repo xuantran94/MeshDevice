@@ -71,6 +71,8 @@ Light:
       - Value: true
     InfoEnable: 
       - Value: true
+    ToggleFilterTime:
+      - Value: 500u
 
 HwAbPwm: 
   General:

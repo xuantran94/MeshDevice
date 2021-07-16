@@ -15,6 +15,11 @@ Std_ReturnType ICACHE_FLASH_ATTR HwAbDio_Get (uint8 hwAbDioId_u8, uint8* state_u
 #else
 #define HWABDIO_DEBUG( format, ... ) 
 #endif
+#else
+
+#define HwAbDio_Init()
+#define HwAbDio_Set(x,y) E_NOT_OK
+#define HwAbDio_Get(x,y) E_NOT_OK
 
 #endif
 

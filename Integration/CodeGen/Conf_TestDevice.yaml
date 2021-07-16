@@ -11,11 +11,53 @@ HassDevice:
 Light:
   ConfigSet:
     - Signal: 
-      Name: DenLamViec
+      Name: DenNhaBep
       FriendlyName: 
-      - Value: DenLamViec
+      - Value: DenNhaBep
+      ConnectedTo:
+      - Value:  2
+      Brighness:
+      - Value: false
+      InitState:
+      - Value: STD_ON
+    - Signal: 
+      Name: DenNhaAn
+      FriendlyName: 
+      - Value:  DenNhaAn
+      ConnectedTo:
+      - Value:  13
+      Brighness:
+      - Value: false
+      InitState:
+      - Value: STD_OFF
+    - Signal: 
+      Name: DenSauHe
+      FriendlyName: 
+      - Value:  DenSauHe
+      ConnectedTo:
+      - Value:  14
+      Brighness:
+      - Value: false
+      InitState:
+      - Value: STD_OFF
+    - Signal: 
+      Name: DenNhaBep12V
+      FriendlyName: 
+      - Value: DenNhaBep12V
       ConnectedTo:
       - Value:  12
+      Brighness:
+      - Value: true
+      InitState:
+      - Value: STD_OFF
+      InitDuty:
+      - Value: 0
+    - Signal: 
+      Name: DenNhaAn12V
+      FriendlyName: 
+      - Value:  DenNhaAn12V
+      ConnectedTo:
+      - Value:  4
       Brighness:
       - Value: true
       InitState:
@@ -75,14 +117,20 @@ Rf:
       Name: SW3_0
       Rf_Val: 
         - Value: 891988658
+      ToggleLightName:  
+        - Value: DenNhaBep
     - Signal:
       Name: SW3_1
       Rf_Val: 
         - Value: 891988682
+      ToggleLightName:  
+        - Value: DenNhaAn
     - Signal:
       Name: SW3_2
       Rf_Val: 
         - Value: 891988778
+      ToggleLightName:  
+        - Value: DenSauHe
     - Signal:
       Name: SW4_0
       Rf_Val: 

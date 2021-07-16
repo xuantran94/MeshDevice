@@ -57,9 +57,10 @@ def generate_cfg_h(conf_data):
         for signal in conf_data['HwAbDio']['ConfigSet']:
             cfg_h_signals_id += "#define HwAbDio_"+signal['Name'] + "   " + str(signal_id)+"u\r\n"
             signal_id +=1
+        cfg_h_file_content = cfg_h_file_content.replace("<SIGNALS ID>", cfg_h_signals_id)
 
     cfg_h_file_content = cfg_h_file_content.replace("<CONFIGURATION SETTING>", cfg_h_setting)
-    cfg_h_file_content = cfg_h_file_content.replace("<SIGNALS ID>", cfg_h_signals_id)
+    
     cfg_ht_file.close()
     # generate the files
     cfg_h_file = open(os.path.join(dir_path,"HwAbDio_Cfg.h"), "w")

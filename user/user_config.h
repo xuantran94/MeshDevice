@@ -6,7 +6,7 @@
 #define		LOCAL_ACCESS 0x01
 #define		REMOTE_ACCESS 0x02
 
-#define		WIFI_SSID "xuantran"
+#define		WIFI_SSID "Mesh"
 #define		WIFI_PASSWORD "01227379368"
 
 #define		WIFI_AP_SSID WIFI_SSID

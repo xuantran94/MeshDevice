@@ -74,8 +74,9 @@ void ICACHE_FLASH_ATTR rfMqttConnected_CB (MQTT_Client* client )
     {
         if(rfConfig_ast[rfId_u8].lighToggle_Id_u8 != LIGHT_ID_INVALID)
         {
-            RF_DEBUG("subcribe %lu\r\n",rfConfig_ast[rfId_u8].rfValue_u32);
+            
             os_sprintf(topic_au8,"rf/%lu",rfConfig_ast[rfId_u8].rfValue_u32);
+            RF_DEBUG("subcribe %s\r\n",topic_au8);
             MQTT_Subscribe(client, topic_au8, 0u);
         }
     }
@@ -92,7 +93,7 @@ void ICACHE_FLASH_ATTR Rf_Data_ISR_Cfg(const char *topic_pu8, const char *data_p
             os_sprintf(topic_au8,"rf/%lu",rfConfig_ast[rfId_u8].rfValue_u32);
             if((0u == strcmp(topic_au8, topic_pu8)))
             {
-                RF_DEBUG("action on rf %d with data: %s\r\n", rfId_u8);
+                RF_DEBUG("action on rf %d\r\n", rfId_u8);
                 Light_Toggle(rfConfig_ast[rfId_u8].lighToggle_Id_u8);
                 break;
             }

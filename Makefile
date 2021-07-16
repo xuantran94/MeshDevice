@@ -46,7 +46,7 @@ MODULES		= driver user mqtt easygpio  jsmn
 MODULES	   += Integration Integration/OS Integration/HassDevice Integration/Light
 MODULES	   += Integration/Hass Integration/Conf Integration/MqttIf 
 MODULES	   += Integration/HwAbDio Integration/HwAbPwm Integration/Swadp
-MODULES	   += Integration/RF
+MODULES	   += Integration/Rf
 #EXTRA_INCDIR    = include $(BUILD_AREA)/esp-open-sdk/esp-open-lwip/include
 EXTRA_INCDIR    = include
 
@@ -193,6 +193,6 @@ clean:
 	$(Q) rm -rf $(FW_BASE) $(BUILD_BASE)
 	$(Q) find . -name "*~" -print0 | xargs -0 rm -rf
 show:
-	xtensa-lx106-elf-nm -av yourprogram.elf | uniq -u | grep "^4010*"
+	$(XTENSA_TOOLS_ROOT)/xtensa-lx106-elf-addr2line -e $(CURDIR)/build/app.out -fCsip -a 0x4021f6d0
 
 $(foreach bdir,$(BUILD_DIR),$(eval $(call compile-objects,$(bdir))))

@@ -5,8 +5,8 @@
 
 typedef struct
 {
-    uint32 rfValue_u32;
-    uint8  lighToggle_Id_u8;
+    const uint32 rfValue_u32;
+    const uint8  lighToggle_Id_u8;
 }RfConfig_tst;
 
 #endif

@@ -6,6 +6,7 @@
 #include "HwAbDio.h"
 #include "Light.h"
 #include "Swadp.h"
+#include "Rf.h"
 /* Todo: removed in the future */
 #include "mqtt.h"
 

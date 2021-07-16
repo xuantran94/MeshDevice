@@ -90,6 +90,30 @@ HwAbDio:
 Rf:
   ConfigSet:
     - Signal:
+      Name: SW1_0
+      Rf_Val: 
+        - Value: 883600050
+    - Signal:
+      Name: SW1_1
+      Rf_Val: 
+        - Value: 883600074
+    - Signal:
+      Name: SW1_2
+      Rf_Val: 
+        - Value: 883600170
+    - Signal:
+      Name: SW2_0
+      Rf_Val: 
+        - Value: 892120242
+    - Signal:
+      Name: SW2_1
+      Rf_Val: 
+        - Value: 892120266
+    - Signal:
+      Name: SW2_2
+      Rf_Val: 
+        - Value: 892120362
+    - Signal:
       Name: SW3_0
       Rf_Val: 
         - Value: 891988658
@@ -107,6 +131,18 @@ Rf:
         - Value: 891988778
       ToggleLightName:  
         - Value: DenSauHe
+    - Signal:
+      Name: SW4_0
+      Rf_Val: 
+        - Value: 3008025266
+    - Signal:
+      Name: SW4_1
+      Rf_Val: 
+        - Value: 3008025290
+    - Signal:
+      Name: SW4_2
+      Rf_Val: 
+        - Value: 3008025386
   General:
     DebugEnable: 
       - Value: true

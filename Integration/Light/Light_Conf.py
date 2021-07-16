@@ -58,25 +58,25 @@ def generate_cfg_h(conf_data):
     cfg_ht_file = open(dir_path+"/Light_Cfg.ht","r")
     cfg_h_file_content = cfg_ht_file.read()
     cfg_h_setting = ""
-    off_setting = "    STD_OFF\r\n"
-    on_setting  = "    STD_ON\r\n"
-    cfg_h_setting += "#define LIGHT_CFG_MODULE_ACTIVE"
+    off_setting = "STD_OFF\r\n"
+    on_setting  = "STD_ON\r\n"
+    cfg_h_setting += "#define LIGHT_CFG_MODULE_ACTIVE   "
     if( not conf_data['Light']['ConfigSet'] ):
         print("Light component is disbaled")
         cfg_h_setting += off_setting
     else:
         cfg_h_setting += on_setting
-        cfg_h_setting += "#define LIGHT_CFG_MQTT"
+        cfg_h_setting += "#define LIGHT_CFG_MQTT            "
         if(cdlib_get_value(conf_data['Light']['General']['MqttSupported'],1,1)):
              cfg_h_setting += on_setting
         else:
             cfg_h_setting  += off_setting
-        cfg_h_setting += "#define LIGHT_CFG_DEBUG"
+        cfg_h_setting += "#define LIGHT_CFG_DEBUG           "
         if(cdlib_get_value(conf_data['Light']['General']['DebugEnable'],1,1)):
             cfg_h_setting += on_setting
         else:
             cfg_h_setting += off_setting
-        cfg_h_setting += "#define LIGHT_CFG_INFO"
+        cfg_h_setting += "#define LIGHT_CFG_INFO            "
         if(cdlib_get_value(conf_data['Light']['General']['InfoEnable'],1,1)):
             cfg_h_setting += on_setting
         else:
@@ -86,7 +86,7 @@ def generate_cfg_h(conf_data):
 
 
         # number of signal
-        cfg_h_setting += "#define LIGHT_CFG_NUM_LIGHTS    " + str(len(conf_data['Light']['ConfigSet'])) +'u'
+        cfg_h_setting += "#define LIGHT_CFG_NUM_LIGHTS      " + str(len(conf_data['Light']['ConfigSet'])) +'u'
 
         cfg_h_signals_id =""
         signal_id = 0

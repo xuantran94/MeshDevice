@@ -20,7 +20,10 @@ def generate_report(conf_data):
         for signal in conf_data['Rf']['ConfigSet']:
             report_content += "    Signal: "+signal['Name']+"\r\n"
             report_content += "         Rf_Val            : "+ str(cdlib_get_value(signal['Rf_Val'],1,1))+"\r\n"
-            report_content += "         ToggleLightName   : "+ "Light_" + str(cdlib_get_value(signal['ToggleLightName'],1,1))+"\r\n"
+            if( "ToggleLightName" in  signal):
+                report_content += "         ToggleLightName   : "+ "Light_" + str(cdlib_get_value(signal['ToggleLightName'],1,1))+"\r\n"
+            else:
+                report_content  += "         ToggleLightName   : LIGHT_ID_INVALID\r\n"
 
     report_file = open(os.path.join(dir_path,"Rf_Report.txt"), "w")
     report_file.write(report_content)
@@ -77,8 +80,11 @@ def generate_cfg_c(conf_data):
         for signal in conf_data['Rf']['ConfigSet']:
             cfg_c_signals += "  {\r\n"
             cfg_c_signals += "      //" + signal['Name'] + "\r\n"
-            cfg_c_signals += "      " + str(cdlib_get_value(signal['Rf_Val'],1,1)) +",\r\n"
-            cfg_c_signals += "      Light_" + str(cdlib_get_value(signal['ToggleLightName'],1,1)) +",\r\n"
+            cfg_c_signals += "      " + str(cdlib_get_value(signal['Rf_Val'],1,1)) +"u,\r\n"
+            if( "ToggleLightName" in  signal):
+                cfg_c_signals += "      Light_" + str(cdlib_get_value(signal['ToggleLightName'],1,1)) +",\r\n"
+            else:
+                cfg_c_signals += "      LIGHT_ID_INVALID,\r\n"
             cfg_c_signals += "  },\r\n"
     cfg_c_file_content = cfg_c_file_content.replace("<SIGNALS CONFIGURATION>", cfg_c_signals)
     cfg_ct_file.close()

@@ -1,0 +1,15 @@
+#ifndef _RF_CFG_H_
+#define _RF_CFG_H_
+
+#include "Rf_Types.h"
+//<INCLUDE DRIVER>
+
+<CONFIGURATION SETTING>
+
+#if (RF_CFG_MODULE_ACTIVE == STD_ON) 
+
+<SIGNALS ID>
+extern const RfConfig_tst rfConfig_ast[RF_CFG_NUM];
+#endif
+
+#endif

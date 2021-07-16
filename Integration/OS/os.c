@@ -26,7 +26,7 @@ Std_ReturnType ICACHE_FLASH_ATTR OS_Ini (void)
     return E_OK;
 };
 void ICACHE_FLASH_ATTR OS_100ms_Task(void *arg)
-{
+{   
     OS_100ms_Task_Cfg();
 };
 void ICACHE_FLASH_ATTR OS_10s_Task(void *arg)
@@ -97,6 +97,11 @@ void ICACHE_FLASH_ATTR OS_mqttData_ISR(const char *topic, uint32_t topic_len, co
 void ICACHE_FLASH_ATTR OS_mqttData_Init(MQTT_Client* client)
 {
     OS_mqttData_Init_Cfg(client);
+    
 };
+uint32 ICACHE_FLASH_ATTR Os_GetTime_us(void)
+{
+    return system_get_time();
+}
 
 

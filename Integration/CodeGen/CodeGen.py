@@ -15,6 +15,8 @@ sys.path.insert(0, '/Users/tranxuan/Nextcloud/HDD/xuantran/Workspace/02_SW/MeshD
 from Hass_Conf import hass_forward, hass_generate
 sys.path.insert(0, '/Users/tranxuan/Nextcloud/HDD/xuantran/Workspace/02_SW/MeshDevice/Integration/HassDevice')
 from HassDevice_Conf import hassdevice_forward, hassdevice_generate
+sys.path.insert(0, '/Users/tranxuan/Nextcloud/HDD/xuantran/Workspace/02_SW/MeshDevice/Integration/RF')
+from Rf_Conf import rf_generate
 
 
 # Load the Configuration data 
@@ -32,6 +34,7 @@ conf_data = light_forward(conf_data)
 hass_generate(conf_data)
 hassdevice_generate(conf_data)
 light_generate(conf_data)
+rf_generate(conf_data)
 hwabpwm_generate(conf_data)
 hwabdio_generate(conf_data)
 print("--------------Code generation is finished----------------")

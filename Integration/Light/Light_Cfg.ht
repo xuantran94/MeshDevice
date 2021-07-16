@@ -9,6 +9,7 @@
 #if (LIGHT_CFG_MODULE_ACTIVE == STD_ON) 
 
 <SIGNALS ID>
+#define LIGHT_ID_INVALID 0xffu
 extern const LightConfig_tst lightConfig_ast[LIGHT_CFG_NUM_LIGHTS];
 #endif
 

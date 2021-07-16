@@ -18,6 +18,7 @@ void ICACHE_FLASH_ATTR OS_Init_Cfg(void)
     (void) HwAbPwm_Init();
     (void) HwAbDio_Init();
     (void) Light_Init();
+    (void) rf_Init();
 };
 void ICACHE_FLASH_ATTR OS_IniEnd_Cfg(void)
 {

@@ -5,6 +5,7 @@
 #include "osapi.h"
 #include "string.h" 
 #include "jsmn.h"
+#include "os.h"
 
 Light_tst light_ast[LIGHT_CFG_NUM_LIGHTS];
 
@@ -112,11 +113,22 @@ Std_ReturnType ICACHE_FLASH_ATTR Light_Toggle(uint8 lightId_u8)
 {
     uint8 ligtStateCurr_u8;
     Std_ReturnType retVal_u8;
+    uint32 sysTime_u32 = Os_GetTime_us();
+    static uint32 lastTimeStamp_u32 = 0;
     //TODO: Check the filter time
-    retVal_u8 = Light_GetState(lightId_u8, &ligtStateCurr_u8);
-    if(retVal_u8 == E_OK)
+    if( (sysTime_u32 - lastTimeStamp_u32) > LIGHT_TOGGLE_FILTER_TIME*1000u)
     {
-        retVal_u8 = Light_SetState(lightId_u8, !ligtStateCurr_u8);
+        retVal_u8 = Light_GetState(lightId_u8, &ligtStateCurr_u8);
+        if(retVal_u8 == E_OK)
+        {
+            retVal_u8 = Light_SetState(lightId_u8, !ligtStateCurr_u8);
+        }
+        lastTimeStamp_u32 = sysTime_u32;
+    }
+    else
+    {
+        retVal_u8 = E_NOT_OK;
+        LIGHT_DEBUG("Not enought time to toggle %d\r\n",sysTime_u32 - lastTimeStamp_u32);
     }
     return retVal_u8;
 };

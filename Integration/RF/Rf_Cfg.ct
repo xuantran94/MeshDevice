@@ -1,0 +1,8 @@
+#include "Rf_Cfg.h"
+#if (RF_CFG_MODULE_ACTIVE == STD_ON) 
+#include "Light.h"
+const RfConfig_tst rfConfig_ast[RF_CFG_NUM] =
+{
+<SIGNALS CONFIGURATION>
+};
+#endif

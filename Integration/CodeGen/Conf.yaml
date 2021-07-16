@@ -15,7 +15,7 @@ Light:
       FriendlyName: 
       - Value: DenNhaBep
       ConnectedTo:
-      - Value:  12
+      - Value:  2
       Brighness:
       - Value: false
       InitState:
@@ -45,7 +45,7 @@ Light:
       FriendlyName: 
       - Value: DenNhaBep12V
       ConnectedTo:
-      - Value:  2
+      - Value:  12
       Brighness:
       - Value: true
       InitState:
@@ -87,6 +87,33 @@ HwAbDio:
       - Value: true
     InfoEnable: 
       - Value: false
+Rf:
+  ConfigSet:
+    - Signal:
+      Name: SW3_0
+      Rf_Val: 
+        - Value: 891988658
+      ToggleLightName:  
+        - Value: DenNhaBep
+    - Signal:
+      Name: SW3_1
+      Rf_Val: 
+        - Value: 891988682
+      ToggleLightName:  
+        - Value: DenNhaAn
+    - Signal:
+      Name: SW3_2
+      Rf_Val: 
+        - Value: 891988778
+      ToggleLightName:  
+        - Value: DenSauHe
+  General:
+    DebugEnable: 
+      - Value: true
+    InfoEnable: 
+      - Value: false
+    RfPin: 
+      - Value: 5
 
 
 

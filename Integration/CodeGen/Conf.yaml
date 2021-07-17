@@ -5,9 +5,9 @@ Hass:
 HassDevice:
   General:
     Id: 
-      - Value: "00000001"
+      - Value: "00000002"
     Name: 
-      - Value: TestDevice1
+      - Value: BanLamViec
 Light:
   ConfigSet:
     - Signal: 
@@ -15,7 +15,7 @@ Light:
       FriendlyName: 
       - Value: DenLamViec
       ConnectedTo:
-      - Value:  2
+      - Value:  4
       Brighness:
       - Value: true
       InitState:

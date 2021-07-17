@@ -4,6 +4,7 @@
 void ICACHE_FLASH_ATTR OS_mqttConnected_ISR_Cfg(MQTT_Client* client)
 {
     Std_ReturnType retVal_u8;
+    (void) rf_Init();
     retVal_u8 = Light_Hass_Register(client);
     retVal_u8 = HassDevice_SetOnline(client);
     rfMqttConnected_CB(client);
@@ -20,7 +21,7 @@ void ICACHE_FLASH_ATTR OS_Init_Cfg(void)
     (void) HwAbPwm_Init();
     HwAbDio_Init();
     (void) Light_Init();
-    (void) rf_Init();
+    
     
 };
 void ICACHE_FLASH_ATTR OS_IniEnd_Cfg(void)

@@ -193,6 +193,6 @@ clean:
 	$(Q) rm -rf $(FW_BASE) $(BUILD_BASE)
 	$(Q) find . -name "*~" -print0 | xargs -0 rm -rf
 show:
-	$(XTENSA_TOOLS_ROOT)/xtensa-lx106-elf-addr2line -e $(CURDIR)/build/app.out -fCsip -a 0x4021f6d0
+	$(XTENSA_TOOLS_ROOT)/xtensa-lx106-elf-addr2line -e $(CURDIR)/build/app.out -fCsip -a 0x4021f704
 
 $(foreach bdir,$(BUILD_DIR),$(eval $(call compile-objects,$(bdir))))

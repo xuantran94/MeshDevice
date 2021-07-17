@@ -100,4 +100,10 @@ void ICACHE_FLASH_ATTR Rf_Data_ISR_Cfg(const char *topic_pu8, const char *data_p
         }
     }
 };
+void ICACHE_FLASH_ATTR Rf_Shutdown(void)
+{
+//     easygpio_pinMode(RF_PIN, EASYGPIO_NOPULL, EASYGPIO_INPUT);
+//     easygpio_attachInterrupt(RF_PIN, EASYGPIO_PULLUP, rf_gpio_intr_handler, NULL);
+    gpio_pin_intr_state_set(GPIO_ID_PIN(RF_PIN), GPIO_PIN_INTR_DISABLE);
+}
 #endif

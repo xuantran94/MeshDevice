@@ -69,13 +69,13 @@
 // Define this to 1 if you want to have access to the config console via TCP.
 // Ohterwise only local access via serial is possible
 //
-#define		REMOTE_CONFIG 0
+#define		REMOTE_CONFIG 1
 #define		CONSOLE_SERVER_PORT 7777
 
 //
 // Define this to 1 if you want to have access to the config via Web.
 //
-#define		WEB_CONFIG 0
+#define		WEB_CONFIG 1
 #define		WEB_CONFIG_PORT 80
 
 //

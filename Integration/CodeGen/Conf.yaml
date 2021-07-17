@@ -15,7 +15,7 @@ Light:
       FriendlyName: 
       - Value: DenLamViec
       ConnectedTo:
-      - Value:  12
+      - Value:  2
       Brighness:
       - Value: true
       InitState:

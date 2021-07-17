@@ -2174,8 +2174,10 @@ void ICACHE_FLASH_ATTR console_handle_command(struct espconn *pespconn)
         }
         if (strcmp(tokens[1], "update") == 0)
         {
+            Os_shutdown();
             currentconn = pespconn;
             OtaUpdate();
+
             os_sprintf_flash(response, "Update initiated\r\n");
             goto command_handled;
         }

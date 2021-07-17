@@ -4,6 +4,7 @@
 #include "c_types.h"
 
 typedef uint8_t Std_ReturnType;
+
 #define E_OK        (0u)
 #define E_NOT_OK    (1u)
 

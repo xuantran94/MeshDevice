@@ -10,6 +10,7 @@
 Std_ReturnType ICACHE_FLASH_ATTR rf_Init(void);
 void ICACHE_FLASH_ATTR rfMqttConnected_CB (MQTT_Client* client );
 void ICACHE_FLASH_ATTR Rf_Data_ISR_Cfg(const char *topic_pu8, const char *data_pu8 );
+void ICACHE_FLASH_ATTR Rf_Shutdown(void);
 #else
 
 #endif

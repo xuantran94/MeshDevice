@@ -12,4 +12,5 @@ void ICACHE_FLASH_ATTR ICACHE_FLASH_ATTR OS_mqttConnected_ISR(MQTT_Client* clien
 void ICACHE_FLASH_ATTR OS_mqttData_ISR(const char *topic, uint32_t topic_len, const char *data, uint32_t data_len );
 void ICACHE_FLASH_ATTR OS_mqttData_Init(MQTT_Client* client);
 uint32 ICACHE_FLASH_ATTR Os_GetTime_us(void);
+void ICACHE_FLASH_ATTR Os_shutdown(void);
 #endif

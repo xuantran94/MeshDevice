@@ -4,15 +4,42 @@
 
 
 void ICACHE_FLASH_ATTR OS_10ms_Task(void *arg);
+void ICACHE_FLASH_ATTR OS_100ms_Task(void *arg);
 void ICACHE_FLASH_ATTR OS_20ms_Task(void *arg);
 void ICACHE_FLASH_ATTR OS_1ms_Task(void *arg);
 void ICACHE_FLASH_ATTR OS_10us_Task(void *arg);
+void ICACHE_FLASH_ATTR OS_10s_Task(void *arg);
 
 static os_timer_t ptimer_100ms_Task;
 static os_timer_t ptimer_10ms_Task;
 static os_timer_t ptimer_1ms_Task;
+
 static os_timer_t ptimer_10us_Task;
 static os_timer_t ptimer_10s_Task;
+
+void ICACHE_FLASH_ATTR Os_shutdown(void)
+{
+    os_timer_disarm(&ptimer_100ms_Task);
+    os_timer_disarm(&ptimer_10ms_Task);
+    os_timer_disarm(&ptimer_1ms_Task);
+    os_timer_disarm(&ptimer_10us_Task);
+    os_timer_disarm(&ptimer_10s_Task);
+    Rf_Shutdown();
+}
+void ICACHE_FLASH_ATTR Os_Start(void)
+{
+    os_timer_setfn(&ptimer_10ms_Task, OS_10ms_Task, 0);
+    os_timer_arm(&ptimer_10ms_Task, 10, true);
+
+    os_timer_setfn(&ptimer_10us_Task, OS_10us_Task, 0);
+    os_timer_arm_us(&ptimer_10us_Task, 10, true);
+
+    os_timer_setfn(&ptimer_100ms_Task, OS_100ms_Task, 0);
+    os_timer_arm(&ptimer_100ms_Task, 100, true);
+
+    os_timer_setfn(&ptimer_10s_Task, OS_10s_Task, 0);
+    os_timer_arm(&ptimer_10s_Task, 10000, true);
+}
 
 Std_ReturnType ICACHE_FLASH_ATTR OS_Init(void)
 {
@@ -35,28 +62,14 @@ void ICACHE_FLASH_ATTR OS_10s_Task(void *arg)
 };
 Std_ReturnType ICACHE_FLASH_ATTR OS_IniEnd(void)
 {
-    os_printf("OS_IniEnd\r\n");
     OS_IniEnd_Cfg();
+    Os_Start();
 
-    os_timer_setfn(&ptimer_10ms_Task, OS_10ms_Task, 0);
-    os_timer_arm(&ptimer_10ms_Task, 10, true);
-
-    os_timer_setfn(&ptimer_10us_Task, OS_10us_Task, 0);
-    os_timer_arm_us(&ptimer_10us_Task, 10, true);
-
-    os_timer_setfn(&ptimer_100ms_Task, OS_100ms_Task, 0);
-    os_timer_arm(&ptimer_100ms_Task, 100, true);
-
-    os_timer_setfn(&ptimer_10s_Task, OS_10s_Task, 0);
-    os_timer_arm(&ptimer_10s_Task, 10000, true);
     return E_OK;
 };
-/* cyclic tasks */
-
 
 void ICACHE_FLASH_ATTR OS_10ms_Task(void *arg)
 {
-    //os_printf("OS_10ms\r\n");
     OS_Task_10ms_Cfg();
 };
 void ICACHE_FLASH_ATTR OS_20ms_Task(void *arg)
